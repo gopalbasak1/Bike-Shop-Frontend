@@ -7,6 +7,8 @@ import Products from "@/pages/Products";
 import Signup from "@/pages/Signup";
 import { createBrowserRouter } from "react-router-dom";
 import { adminPaths } from "./admin.routes";
+import { routeGenerator } from "@/utils/routesGenerator";
+import { customerPaths } from "./customer.routes";
 
 const router = createBrowserRouter([
   {
@@ -40,12 +42,12 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: <App />,
-    children: adminPaths,
+    children: routeGenerator(adminPaths),
   },
   {
     path: "/customer",
     element: <App />,
-    children: adminPaths,
+    children: routeGenerator(customerPaths),
   },
 ]);
 

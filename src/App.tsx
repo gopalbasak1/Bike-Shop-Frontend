@@ -1,9 +1,12 @@
 import Dashboard from "./components/layout/Dashboard/Dashboard";
+import ProtectedRoute from "./components/layout/ProtectedRoute";
 
 const App = () => {
   return (
     <>
-      <Dashboard />
+      <ProtectedRoute>
+        <Dashboard />
+      </ProtectedRoute>
     </>
   );
 };
