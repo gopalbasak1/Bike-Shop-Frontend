@@ -5,9 +5,15 @@ type TTextAreaProps = {
   name: string;
   label: string;
   placeholder?: string;
+  className?: string;
 };
 
-const PHTextArea = ({ name, label, placeholder, rules }: TTextAreaProps) => {
+const PHTextArea = ({
+  name,
+  label,
+  placeholder,
+  className,
+}: TTextAreaProps) => {
   const { control } = useFormContext();
 
   return (
@@ -15,10 +21,13 @@ const PHTextArea = ({ name, label, placeholder, rules }: TTextAreaProps) => {
       <Controller
         name={name}
         control={control}
-        rules={rules}
         render={({ field, fieldState }) => (
           <>
-            <Input.TextArea {...field} placeholder={placeholder} />
+            <Input.TextArea
+              {...field}
+              placeholder={placeholder}
+              className={className}
+            />
             {fieldState.error && (
               <span style={{ color: "red" }}>{fieldState.error.message}</span>
             )}

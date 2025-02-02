@@ -1,5 +1,6 @@
-import AllProduct from "@/pages/admin/AllProduct";
-import CreateProduct from "@/pages/admin/CreateProduct";
+import AllProduct from "@/pages/admin/prducts/AllProduct";
+import CreateProduct from "@/pages/admin/prducts/CreateProduct";
+import UpdateProduct from "@/pages/admin/prducts/UpdateProduct";
 import UpdateOrderStatus from "@/pages/admin/UpdateOrderStatus";
 import AllUser from "@/pages/admin/Users/AllUser";
 
@@ -13,6 +14,21 @@ export const adminPaths = [
     name: "User Management",
     children: [
       {
+        name: "Update Status",
+        path: "update-status",
+        element: <UpdateOrderStatus />,
+      },
+      {
+        name: "All User",
+        path: "all-user",
+        element: <AllUser />,
+      },
+    ],
+  },
+  {
+    name: "Product Management",
+    children: [
+      {
         name: "Create Product",
         path: "create-product",
         element: <CreateProduct />,
@@ -23,14 +39,9 @@ export const adminPaths = [
         element: <AllProduct />,
       },
       {
-        name: "Update Status",
-        path: "update-status",
-        element: <UpdateOrderStatus />,
-      },
-      {
-        name: "All User",
-        path: "all-user",
-        element: <AllUser />,
+        name: "Update Product",
+        path: "update-product/:id",
+        element: <UpdateProduct />,
       },
     ],
   },

@@ -1,5 +1,5 @@
 const AllCustomer = () => {
-  return <div>customer</div>;
+  return <div></div>;
 };
 
 export default AllCustomer;
