@@ -5,10 +5,9 @@ import { TQueryParam } from "../../../types/index";
 import {
   useDeleteProductMutation,
   useGetAllProductQuery,
-  useGetSingleProductQueryQuery,
 } from "@/redux/features/admin/admin.api";
 import { useNavigate } from "react-router-dom";
-import { FaDeleteLeft, FaPenToSquare } from "react-icons/fa6";
+import { FaPenToSquare } from "react-icons/fa6";
 import { MdOutlineDelete } from "react-icons/md";
 import { toast } from "sonner";
 
@@ -19,7 +18,7 @@ const AllProduct = () => {
   const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
   const {
     data: productData,
-
+    refetch,
     isFetching,
   } = useGetAllProductQuery(params);
 
@@ -45,7 +44,9 @@ const AllProduct = () => {
 
     try {
       const result = await deleteProduct({ id: _id }).unwrap();
+
       console.log("Delete Response:", result);
+      refetch();
       toast.success("Product deleted successfully!");
     } catch (error) {
       console.error("Delete Error:", error);
@@ -100,12 +101,19 @@ const AllProduct = () => {
       responsive: ["xs", "sm", "md", "lg", "xl"],
       render: (item) => (
         <div style={{ display: "flex", gap: "10px" }}>
-          <Button onClick={() => navigate(`/admin/update-product/${item.key}`)}>
-            <FaPenToSquare />
+          <Button
+            className="border-none"
+            onClick={() => navigate(`/admin/update-product/${item.key}`)}
+          >
+            <FaPenToSquare className="hover:text-green-500" />
           </Button>
 
-          <Button loading={isDeleting} onClick={() => handleDelete(item.key)}>
-            <MdOutlineDelete />
+          <Button
+            className="outline-none border-none"
+            loading={isDeleting}
+            onClick={() => handleDelete(item.key)}
+          >
+            <MdOutlineDelete className="hover:text-red-500" />
           </Button>
           {/* <Button loading={isDeleting} onClick={() => console.log(item.key)}>
             <MdOutlineDelete />

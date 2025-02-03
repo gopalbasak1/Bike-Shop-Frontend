@@ -43,12 +43,13 @@ const CreateProduct = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
-    const { name, brand, category, price, quantity, description } = data;
+    const { name, brand, model, category, price, quantity, description } = data;
 
     const productData = {
       name,
       brand,
       category,
+      model,
       price: Number(price),
       quantity: Number(quantity),
       description,
@@ -82,7 +83,7 @@ const CreateProduct = () => {
       <Col>
         <PHForm onSubmit={onSubmit}>
           <Row className="gap-5">
-            <PHInput label="name" name="name" type="text" />
+            <PHInput label="Name" name="name" type="text" />
             <PHInput label="Brand" name="brand" type="text" />
           </Row>
 
@@ -94,6 +95,10 @@ const CreateProduct = () => {
             />
 
             <PHInput label="Price" name="price" type="text" />
+          </Row>
+
+          <Row className="gap-5">
+            <PHInput label="Model" name="model" type="text" />
 
             <PHInput label="Quantity" name="quantity" type="text" />
           </Row>

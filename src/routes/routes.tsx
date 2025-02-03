@@ -9,6 +9,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { adminPaths } from "./admin.routes";
 import { routeGenerator } from "@/utils/routesGenerator";
 import { customerPaths } from "./customer.routes";
+import ProtectedRoute from "@/components/layout/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -41,12 +42,20 @@ const router = createBrowserRouter([
   //admin routes
   {
     path: "/admin",
-    element: <App />,
+    element: (
+      <ProtectedRoute role="admin">
+        <App />
+      </ProtectedRoute>
+    ),
     children: routeGenerator(adminPaths),
   },
   {
     path: "/customer",
-    element: <App />,
+    element: (
+      <ProtectedRoute role="customer">
+        <App />
+      </ProtectedRoute>
+    ),
     children: routeGenerator(customerPaths),
   },
 ]);

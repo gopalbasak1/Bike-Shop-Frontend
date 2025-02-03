@@ -2,16 +2,44 @@ import PHForm from "@/components/form/PHForm";
 import PHInput from "@/components/form/PHInput";
 import { useAddRegisterMutation } from "@/redux/features/Users/users.api";
 import { Button, Col, Divider, Row } from "antd";
+import { useState } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const Signup = () => {
   const [addUser, { data, error, isError }] = useAddRegisterMutation();
+  const [imageUrl, setImageUrl] = useState("");
 
   const navigate = useNavigate();
 
   console.log({ data, error, isError });
+
+  const handleImageUpload = async (event: any) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append(
+      "upload_preset",
+      import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
+    );
+
+    formData.append("cloud_name", import.meta.env.VITE_CLOUDINARY_CLOUD_NAME);
+
+    try {
+      const res = await fetch(import.meta.env.VITE_CLOUDINARY_API_URL, {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+      setImageUrl(data.secure_url); // Save the uploaded image URL
+    } catch (error) {
+      console.error("Image upload failed", error);
+    }
+  };
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const userData = {
@@ -23,6 +51,7 @@ const Signup = () => {
         },
         email: data.email,
         password: data.password,
+        image: imageUrl,
       },
     };
 
@@ -69,6 +98,15 @@ const Signup = () => {
               <PHInput type="password" name="password" label="Password" />
             </Col>
           </Row>
+
+          {/* Image Upload Input */}
+          <input
+            className="mb-5"
+            type="file"
+            onChange={handleImageUpload}
+            accept="image/*"
+          />
+          {imageUrl && <img src={imageUrl} alt="Uploaded" width="100" />}
 
           <Button
             className="w-full bg-blue-500 text-white hover:bg-blue-700"

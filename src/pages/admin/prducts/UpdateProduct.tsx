@@ -12,14 +12,18 @@ import PHSelect from "@/components/form/PHSelect";
 import PHTextArea from "@/components/form/PHTextArea";
 import { categoryOptions } from "@/constants/global";
 import { useState } from "react";
+import { FieldValues } from "react-hook-form";
 
 const UpdateProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data: productData } = useGetSingleProductQueryQuery(id ?? "");
-  const [updateProduct] = useUpdateProductMutation();
-  const { refetch } = useGetAllProductQuery(undefined);
 
+  const { data: productData } = useGetSingleProductQueryQuery(id);
+  console.log(productData);
+
+  const [updateProduct] = useUpdateProductMutation();
+
+  const { refetch } = useGetAllProductQuery(undefined);
   const [imageUrl, setImageUrl] = useState(productData?.image || ""); // 🖼️ Store current image URL
 
   // ✅ Handle Image Upload
@@ -49,17 +53,33 @@ const UpdateProduct = () => {
   };
 
   // ✅ Handle Form Submission
-  const onSubmit = async (formData) => {
+  // ✅ Handle Form Submission
+  // ✅ Handle Form Submission
+  const onSubmit = async (formData: FieldValues) => {
     if (!id) {
       toast.error("Invalid product ID!");
       return;
     }
 
     try {
-      const updatedData = {
-        ...formData,
-        image: imageUrl || productData?.image, // 🖼️ Keep old image if no new one is uploaded
-      };
+      // ✅ Only include fields that the user changed
+      const updatedData: Record<string, any> = {};
+
+      if (formData.name) updatedData.name = formData.name;
+      if (formData.brand) updatedData.brand = formData.brand;
+      if (formData.category) updatedData.category = formData.category;
+      if (formData.model) updatedData.model = formData.model;
+      if (formData.price) updatedData.price = Number(formData.price);
+      if (formData.quantity) updatedData.quantity = Number(formData.quantity);
+      if (formData.description) updatedData.description = formData.description;
+
+      // ✅ Keep old image if no new one is uploaded
+      updatedData.image = imageUrl || productData?.image;
+
+      if (Object.keys(updatedData).length === 0) {
+        toast.error("No changes detected!");
+        return;
+      }
 
       await updateProduct({ _id: id, data: updatedData }).unwrap();
       navigate("/admin/all-product");
@@ -86,7 +106,12 @@ const UpdateProduct = () => {
               name="category"
               options={categoryOptions}
             />
+
+            <PHInput label="Model" name="model" type="text" />
+          </Row>
+          <Row className="gap-5">
             <PHInput label="Price" name="price" type="text" />
+
             <PHInput label="Quantity" name="quantity" type="text" />
           </Row>
 

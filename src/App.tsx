@@ -4,7 +4,7 @@ import ProtectedRoute from "./components/layout/ProtectedRoute";
 const App = () => {
   return (
     <>
-      <ProtectedRoute>
+      <ProtectedRoute role={undefined}>
         <Dashboard />
       </ProtectedRoute>
     </>
