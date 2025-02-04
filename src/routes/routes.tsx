@@ -10,6 +10,9 @@ import { adminPaths } from "./admin.routes";
 import { routeGenerator } from "@/utils/routesGenerator";
 import { customerPaths } from "./customer.routes";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
+import AllProduct from "@/pages/AllProduct";
+import ProductDetails from "@/components/Shared/Home/ProductDetails";
+import Checkout from "@/pages/Checkout/Checkout";
 
 const router = createBrowserRouter([
   {
@@ -21,8 +24,16 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/all-products",
-        element: <Products />,
+        path: "/all-product",
+        element: <AllProduct />,
+      },
+      {
+        path: "/products/:id",
+        element: <ProductDetails />,
+      },
+      {
+        path: "/checkout/",
+        element: <Checkout />,
       },
       {
         path: "/about",

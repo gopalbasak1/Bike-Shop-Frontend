@@ -46,12 +46,13 @@ const productApi = baseApi.injectEndpoints({
         return {
           url: "/products",
           method: "GET",
+          params: params,
         };
       },
       transformResponse: (response: TResponseRedux<TProduct[]>) => {
         return {
           data: response.data,
-          //meta: response.meta,
+          meta: response.meta,
         };
       },
     }),
@@ -69,7 +70,7 @@ const productApi = baseApi.injectEndpoints({
         body: args.data,
       }),
     }),
-    getSingleProductQuery: builder.query({
+    getSingleProduct: builder.query({
       query: (args) => ({
         url: `/products/${args._id}`,
         method: "GET",
@@ -89,7 +90,7 @@ export const {
   useGetAllProductQuery,
   useAddProductMutation,
   useUpdateProductMutation,
-  useGetSingleProductQueryQuery,
+  useGetSingleProductQuery,
   useDeleteProductMutation,
   useGetAllUsersQuery,
   useStatusUpdateMutation,

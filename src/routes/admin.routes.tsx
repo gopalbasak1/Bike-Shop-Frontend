@@ -62,4 +62,14 @@ export const adminPaths = [
       },
     ],
   },
+  {
+    name: "Order Management",
+    children: [
+      {
+        name: "Update Order Status",
+        path: "update-status",
+        element: <UpdateOrderStatus />,
+      },
+    ],
+  },
 ];

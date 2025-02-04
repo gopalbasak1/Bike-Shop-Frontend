@@ -14,3 +14,15 @@ export type TProduct = {
   updatedAt: string;
   __v: number;
 };
+
+export type TOrder = {
+  _id: string;
+  user: object;
+  product: object;
+  quantity: number;
+  totalPrice: number;
+  orderStatus: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};

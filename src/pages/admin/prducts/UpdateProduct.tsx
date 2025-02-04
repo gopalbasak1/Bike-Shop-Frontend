@@ -2,7 +2,7 @@ import { Button, Col, Flex, Row } from "antd";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   useGetAllProductQuery,
-  useGetSingleProductQueryQuery,
+  useGetSingleProductQuery,
   useUpdateProductMutation,
 } from "@/redux/features/admin/admin.api";
 import { toast } from "sonner";
@@ -18,7 +18,7 @@ const UpdateProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { data: productData } = useGetSingleProductQueryQuery(id);
+  const { data: productData } = useGetSingleProductQuery(id);
   console.log(productData);
 
   const [updateProduct] = useUpdateProductMutation();

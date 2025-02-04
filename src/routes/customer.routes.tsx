@@ -1,5 +1,7 @@
-import AllOrders from "@/pages/customer/AllOrders";
-import Profile from "@/pages/customer/Profile";
+import ChangePassword from "@/pages/admin/Profile/ChangePassword";
+import MyProfile from "@/pages/admin/Profile/MyProfile";
+import MyOrders from "@/pages/customer/MyOrders";
+import TrackOrder from "@/pages/customer/TrackOrder";
 
 export const customerPaths = [
   {
@@ -11,14 +13,29 @@ export const customerPaths = [
     name: "User Management",
     children: [
       {
-        name: "All Order",
-        path: "all-order",
-        element: <AllOrders />,
-      },
-      {
         name: "Profile",
         path: "Profile",
-        element: <Profile />,
+        element: <MyProfile />,
+      },
+      {
+        name: "Change Password",
+        path: "change-password",
+        element: <ChangePassword />,
+      },
+    ],
+  },
+  {
+    name: "Order Management",
+    children: [
+      {
+        name: "My Order",
+        path: "my-order",
+        element: <MyOrders />,
+      },
+      {
+        name: "Track Order",
+        path: "track-order",
+        element: <TrackOrder />,
       },
     ],
   },
