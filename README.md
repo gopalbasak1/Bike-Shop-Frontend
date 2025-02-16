@@ -5,7 +5,7 @@ The Bike Store is an e-commerce platform where users can browse, filter, and pur
 
 ## Live Deployment Link
 
-[Bike-Store-Server](https://bike-stores.vercel.app/)
+[Bike-Stores](https://bike-stores.vercel.app/)
 
 ## Features
 
@@ -78,9 +78,7 @@ This project integrates **SurjoPay**, a reliable and secure payment gateway, to 
 
 Ensure you have the following installed:
 
-- Node.js (>=16.x)
 - npm or yarn
-- MongoDB (running locally or a hosted instance)
 
 ## 🚀 Getting Started
 
