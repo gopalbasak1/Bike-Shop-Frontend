@@ -3,7 +3,7 @@ import {
   useOrderStatusUpdateMutation,
 } from "@/redux/features/Orders/Order.api";
 import { TQueryParam } from "@/types";
-import { TOrder } from "@/types/product";
+
 import {
   Button,
   DatePicker,
@@ -22,14 +22,17 @@ import { toast } from "sonner";
 /**
  * Defines the structure for order table data.
  */
-export type TTableData = Pick<
-  TOrder,
-  "user" | "_id" | "product" | "orderStatus" | "estimatedDeliveryDate"
-> & {
-  userId: string;
-  status: string;
-  serial: number;
+export type TTableData = {
   key: string;
+  userName: string;
+  userEmail: string;
+  productName: string;
+  orderStatus: string;
+  userId: string;
+  totalPrice: number;
+  orderQuantity: number;
+  estimatedDeliveryDate: string | Date | null; // Ensure it matches the expected type
+  serial: number;
 };
 
 const UpdateOrderStatus = () => {
@@ -65,14 +68,14 @@ const UpdateOrderStatus = () => {
       index
     ) => ({
       key: _id,
-      userName: user?.fullName,
-      userEmail: user?.email,
-      productName: product?.name,
-      orderStatus,
-      userId: user?._id,
-      totalPrice,
-      orderQuantity,
-      estimatedDeliveryDate,
+      userName: user?.fullName || "",
+      userEmail: user?.email || "",
+      productName: product?.name || "",
+      orderStatus: orderStatus || "Pending",
+      userId: user?._id || "",
+      totalPrice: totalPrice || 0,
+      orderQuantity: orderQuantity || 0,
+      estimatedDeliveryDate: estimatedDeliveryDate || null,
       serial: (page - 1) * (metaData?.limit || 10) + index + 1,
     })
   );
@@ -204,7 +207,7 @@ const UpdateOrderStatus = () => {
               ? dayjs(record.estimatedDeliveryDate)
               : null
           }
-          onChange={(date, dateString) =>
+          onChange={(_date, dateString) =>
             handleDateChange(record.key, dateString)
           }
         />

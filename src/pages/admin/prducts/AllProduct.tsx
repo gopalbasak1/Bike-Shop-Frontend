@@ -12,7 +12,7 @@ import { MdOutlineDelete } from "react-icons/md";
 import { toast } from "sonner";
 
 const AllProduct = () => {
-  const [params, setParams] = useState<TQueryParam[] | undefined>(undefined);
+  const [params, _setParams] = useState<TQueryParam[] | undefined>(undefined);
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
 

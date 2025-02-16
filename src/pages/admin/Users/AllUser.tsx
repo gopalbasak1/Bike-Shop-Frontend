@@ -27,7 +27,7 @@ export type TTableData = {
 };
 
 const AllUser = () => {
-  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [params, _setParams] = useState<TQueryParam[]>([]);
   const [page, setPage] = useState(1);
 
   const {

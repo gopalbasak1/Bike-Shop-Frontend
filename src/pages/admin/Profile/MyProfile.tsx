@@ -106,7 +106,7 @@ const MyProfile = () => {
       setIsModalOpen(false);
     } catch (error) {
       console.error("Error updating profile:", error);
-      toast.error(error?.data?.message || "Failed to update profile");
+      toast.error("Failed to update profile");
     }
   };
 

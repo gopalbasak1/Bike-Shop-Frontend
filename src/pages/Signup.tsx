@@ -1,8 +1,8 @@
 import PHForm from "@/components/form/PHForm";
 import PHInput from "@/components/form/PHInput";
 import { useAddRegisterMutation } from "@/redux/features/Users/users.api";
-import { Button, Col, Divider, Row, Typography, Upload } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { Button, Col, Divider, Row, Typography } from "antd";
+
 import { useState } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";

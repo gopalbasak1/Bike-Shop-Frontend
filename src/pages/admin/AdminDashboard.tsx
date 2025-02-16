@@ -18,7 +18,7 @@ import Skeleton from "@/components/Shared/Skeleton/Skeleton";
 
 const AdminDashboard = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [refreshInterval, setRefreshInterval] = useState(5000);
+  const [refreshInterval, _setRefreshInterval] = useState(5000);
 
   // Fetch all users
   const {

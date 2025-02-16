@@ -1,17 +1,16 @@
 import {
-  BaseQueryApi,
   BaseQueryFn,
   createApi,
-  DefinitionType,
   FetchArgs,
   fetchBaseQuery,
+  FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
 import { logout, setUser } from "../features/auth/authSlice";
 import { toast } from "sonner";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:5000/api",
+  baseUrl: "https://bike-store-ebon.vercel.app/api",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
@@ -24,27 +23,33 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithRefreshToken: BaseQueryFn<
   FetchArgs,
-  BaseQueryApi,
-  DefinitionType
-> = async (args, api, extraOptions): Promise<any> => {
+  unknown,
+  FetchBaseQueryError
+> = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
 
-  if (result?.error?.status === 404) {
-    toast.error(result.error.data.message);
+  // Handle 404 and 403 errors
+  if (result.error && "data" in result.error) {
+    const errorData = result.error.data as { message?: string };
+    if (result.error.status === 404) {
+      toast.error(errorData.message || "Resource not found");
+    }
+    if (result.error.status === 403) {
+      toast.error(errorData.message || "Forbidden access");
+    }
   }
 
-  if (result?.error?.status === 403) {
-    toast.error(result.error.data.message);
-  }
-  //send refresh token if unauthorized access
+  // Handle 401 - Unauthorized
   if (result?.error?.status === 401) {
-    //send refresh
     console.log("sending refresh token");
 
-    const res = await fetch("http://localhost:5000/api/auth/refresh-token", {
-      method: "POST",
-      credentials: "include",
-    });
+    const res = await fetch(
+      "https://bike-store-ebon.vercel.app/api/auth/refresh-token",
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
 
     const data = await res.json();
     console.log(data);
@@ -64,6 +69,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
       api.dispatch(logout());
     }
   }
+
   return result;
 };
 

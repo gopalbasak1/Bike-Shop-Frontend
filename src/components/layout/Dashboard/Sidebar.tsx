@@ -5,6 +5,7 @@ import { customerPaths } from "@/routes/customer.routes";
 import { sidebarItemsGenerator } from "@/utils/sidebarItemsGenerator";
 import { verifyToken } from "@/utils/verifyToken";
 import { Layout, Menu } from "antd";
+import { ItemType, MenuItemType } from "antd/es/menu/interface";
 
 const { Sider } = Layout;
 
@@ -62,7 +63,7 @@ const Sidebar = () => {
         theme="dark"
         mode="inline"
         defaultSelectedKeys={["4"]}
-        items={sidebarItems}
+        items={sidebarItems?.filter(Boolean) as ItemType<MenuItemType>[]}
       />
     </Sider>
   );
