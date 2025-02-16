@@ -1,3 +1,4 @@
+import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AllProduct from "@/pages/admin/prducts/AllProduct";
 import CreateProduct from "@/pages/admin/prducts/CreateProduct";
 import UpdateProduct from "@/pages/admin/prducts/UpdateProduct";
@@ -10,7 +11,7 @@ export const adminPaths = [
   {
     name: "Dashboard",
     path: "dashboard",
-    element: "ADMIN_DASHBOARD",
+    element: <AdminDashboard />,
   },
   {
     name: "Profile",
@@ -30,11 +31,6 @@ export const adminPaths = [
   {
     name: "User Management",
     children: [
-      {
-        name: "Update Status",
-        path: "update-status",
-        element: <UpdateOrderStatus />,
-      },
       {
         name: "All User",
         path: "all-user",

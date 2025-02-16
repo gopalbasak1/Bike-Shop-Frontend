@@ -24,7 +24,9 @@ const AllProduct = () => {
   ];
 
   // Fetch all products with filters applied
-  const { data: productData, isFetching } = useGetAllProductQuery(queryParams);
+  const { data: productData, isFetching } = useGetAllProductQuery(queryParams, {
+    refetchOnMountOrArgChange: true,
+  });
   const metaData = productData?.meta;
 
   // Extract unique brands and categories for filtering dropdown
@@ -101,7 +103,10 @@ const AllProduct = () => {
       <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10 my-10">
         {filteredProducts?.length > 0
           ? filteredProducts?.map((item) => (
-              <div className="w-[350] h-auto shadow-md dark:bg-gray-50 dark:text-gray-800 rounded-2xl">
+              <div
+                key={item._id}
+                className="w-[350] h-auto shadow-md dark:bg-gray-50 dark:text-gray-800 rounded-2xl"
+              >
                 {/* Image */}
                 <div className="relative w-full h-[230px] overflow-hidden rounded-t-2xl">
                   <img

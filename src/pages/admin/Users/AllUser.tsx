@@ -1,27 +1,47 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   useGetAllUsersQuery,
   useStatusUpdateMutation,
 } from "@/redux/features/admin/admin.api";
-import { TQueryParam, TUser } from "@/types";
-import { Button, Modal, Space, Table, TableColumnsType } from "antd";
+import { TQueryParam } from "@/types";
+import {
+  Button,
+  Modal,
+  Pagination,
+  Space,
+  Table,
+  TableColumnsType,
+} from "antd";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export type TTableData = Pick<TUser, "fullName" | "_id" | "email"> & {
+export type TTableData = {
+  key: string;
   userId: string;
+  fullName: string;
+  email: string;
+  role: string;
   status: string;
   serial: number;
-  key: string;
+  _id: string;
 };
 
 const AllUser = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
+  const [page, setPage] = useState(1);
 
   const {
     data: userData,
     isFetching,
     refetch,
-  } = useGetAllUsersQuery([...params]);
+  } = useGetAllUsersQuery([{ name: "page", value: page }, ...params], {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 10000,
+  });
+
+  const metaData = userData?.meta;
+
+  console.log(userData, metaData);
 
   const [updateStatus] = useStatusUpdateMutation();
 
@@ -30,10 +50,11 @@ const AllUser = () => {
       key: _id, // Ensure this is used as userId in actions
       userId: id, // Include userId to avoid "undefined" error
       fullName,
+      _id,
       email,
       role,
       status,
-      serial: index + 1,
+      serial: (page - 1) * (metaData?.limit || 10) + index + 1,
     })
   );
 
@@ -140,7 +161,19 @@ const AllUser = () => {
 
   return (
     <>
-      <Table loading={isFetching} columns={columns} dataSource={tableData} />
+      <Table
+        loading={isFetching}
+        columns={columns}
+        dataSource={tableData}
+        scroll={{ x: "max-content" }}
+        pagination={false}
+      />
+      <Pagination
+        current={page}
+        onChange={(value) => setPage(value)}
+        pageSize={metaData?.limit}
+        total={metaData?.total}
+      />
     </>
   );
 };

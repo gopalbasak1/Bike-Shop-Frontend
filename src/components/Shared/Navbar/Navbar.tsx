@@ -24,7 +24,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-[#b5b8b6] text-black p-4 rounded-2xl font-semibold md:mx-2 mx-2 mt-2 relative shadow-lg z-50">
+    <nav className="bg-[#111827] text-white p-4 rounded-2xl font-semibold md:mx-2 mx-2 mt-2 relative shadow-lg z-50">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center space-x-2">
@@ -88,7 +88,7 @@ const Navbar = () => {
                 />
               </button>
               {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-40 bg-white text-black shadow-lg z-10 rounded-2xl">
+                <div className="absolute right-0 mt-2 w-40 bg-gray-200 text-black shadow-lg z-10 rounded-2xl">
                   <Link
                     to={`/${user?.role}/dashboard`}
                     className="block px-4 py-2 hover:bg-gray-200"
@@ -119,7 +119,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden absolute top-16 left-0 w-full bg-[#b5b8b6] shadow-lg rounded-b-2xl z-40">
+        <div className="md:hidden absolute top-16 left-0 w-full bg-[#111827] shadow-lg rounded-b-2xl z-40">
           <div className="flex flex-col space-y-4 p-4 text-center">
             <Link
               to="/"

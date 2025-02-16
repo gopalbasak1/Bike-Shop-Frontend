@@ -4,14 +4,20 @@ import { useState } from "react";
 
 import { TOrder } from "@/types/product";
 import { useGetMyOrdersQuery } from "@/redux/features/Orders/Order.api";
+import Skeleton from "@/components/Shared/Skeleton/Skeleton";
 
 const statusSteps = ["Pending", "Paid", "Processing", "Shipped", "Delivered"];
 
 const TrackOrder = () => {
-  const { data, isLoading, error } = useGetMyOrdersQuery(undefined);
+  const { data, isLoading, error } = useGetMyOrdersQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 10000,
+    refetchOnFocus: true, // Auto-refetch when the user switches back to the page
+    refetchOnReconnect: true, // Auto-refetch when the network reconnects
+  });
   const [selectedOrder, setSelectedOrder] = useState<TOrder | null>(null);
 
-  if (isLoading) return <p className="text-center">Loading orders...</p>;
+  if (isLoading) return <Skeleton />;
   if (error)
     return <p className="text-center text-red-500">Error fetching orders</p>;
 

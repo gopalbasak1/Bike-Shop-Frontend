@@ -14,7 +14,12 @@ import { toast } from "sonner";
 const MyProfile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
-  const { data: profile, isLoading, error, refetch } = useGetMeQuery(undefined);
+  const {
+    data: profile,
+    isLoading,
+    error,
+    refetch,
+  } = useGetMeQuery(undefined, { refetchOnMountOrArgChange: true });
   const [updateProfile] = useUpdateUserMutation();
   const navigate = useNavigate();
   const [imageUrl, setImageUrl] = useState("");

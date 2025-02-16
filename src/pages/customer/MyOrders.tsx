@@ -4,12 +4,15 @@ import { useState } from "react";
 
 import { TOrder } from "@/types/product";
 import { useGetMyOrdersQuery } from "@/redux/features/Orders/Order.api";
+import Skeleton from "@/components/Shared/Skeleton/Skeleton";
 
 const MyOrders = () => {
-  const { data, isLoading, error } = useGetMyOrdersQuery(undefined);
+  const { data, isLoading, error } = useGetMyOrdersQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
   const [searchTerm, setSearchTerm] = useState("");
 
-  if (isLoading) return <p>Loading orders...</p>;
+  if (isLoading) return <Skeleton />;
   if (error) return <p>Error fetching orders</p>;
 
   const orders: TOrder[] = data?.data || [];

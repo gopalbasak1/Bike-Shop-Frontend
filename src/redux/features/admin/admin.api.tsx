@@ -14,13 +14,14 @@ const productApi = baseApi.injectEndpoints({
           });
         }
         return {
-          url: "/users",
+          url: `/users?${params.toString()}`,
           method: "GET",
         };
       },
       transformResponse: (response: TResponseRedux<TUser[]>) => {
         return {
           data: response.data,
+          meta: response.meta,
         };
       },
     }),
@@ -38,15 +39,18 @@ const productApi = baseApi.injectEndpoints({
       providesTags: ["products"],
       query: (args) => {
         const params = new URLSearchParams();
-        if (args) {
+        if (args && Array.isArray(args)) {
+          // Ensure args is an array
           args.forEach((item: TQueryParam) => {
-            params.append(item.name, item.value as string);
+            if (item && item.name && item.value) {
+              params.append(item.name, item.value.toString());
+            }
           });
         }
         return {
           url: "/products",
           method: "GET",
-          params: params,
+          params, // Pass query parameters
         };
       },
       transformResponse: (response: TResponseRedux<TProduct[]>) => {
@@ -71,6 +75,7 @@ const productApi = baseApi.injectEndpoints({
       }),
     }),
     getSingleProduct: builder.query({
+      providesTags: ["products"],
       query: (args) => ({
         url: `/products/${args._id}`,
         method: "GET",

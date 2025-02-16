@@ -53,7 +53,7 @@ const ReviewPage = () => {
         >
           {reviews?.data?.map((review: Review) => (
             <SwiperSlide key={review._id}>
-              <div className="border p-4 rounded-lg flex items-start space-x-4">
+              <div className="border p-4  flex items-start space-x-4 rounded-2xl">
                 {/* User Image */}
                 {review.user.image ? (
                   <img
@@ -108,12 +108,15 @@ const ReviewPage = () => {
           ))}
         </div>
         <Textarea
-          className="w-full mt-2"
+          className="w-full mt-2 rounded-xl border-2 border-slate-300"
           placeholder="Write your review..."
           value={comment}
           onChange={(e) => setComment(e.target.value)}
         />
-        <Button className="mt-4" onClick={handleSubmit}>
+        <Button
+          className="mt-4 rounded-2xl hover:bg-black hover:text-white"
+          onClick={handleSubmit}
+        >
           Submit Review
         </Button>
       </div>

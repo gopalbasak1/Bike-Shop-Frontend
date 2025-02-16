@@ -43,11 +43,10 @@ const UpdateOrderStatus = () => {
     data: orderData,
     isFetching,
     refetch,
-  } = useGetAllOrderQuery([
-    { name: "page", value: page },
-    { name: "sort", value: "id" },
-    ...params,
-  ]);
+  } = useGetAllOrderQuery(
+    [{ name: "page", value: page }, { name: "sort", value: "id" }, ...params],
+    { refetchOnMountOrArgChange: true, pollingInterval: 10000 }
+  );
 
   const [updateStatus] = useOrderStatusUpdateMutation();
   const metaData = orderData?.meta;

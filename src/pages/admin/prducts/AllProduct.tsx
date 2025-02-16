@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Button, Table, TableColumnsType, Image } from "antd";
+import { Button, Table, TableColumnsType, Image, Pagination } from "antd";
 import { useState } from "react";
 import { TQueryParam } from "../../../types/index";
 import {
@@ -14,18 +14,24 @@ import { toast } from "sonner";
 const AllProduct = () => {
   const [params, setParams] = useState<TQueryParam[] | undefined>(undefined);
   const navigate = useNavigate();
+  const [page, setPage] = useState(1);
 
   const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
   const {
     data: productData,
     refetch,
     isFetching,
-  } = useGetAllProductQuery(params);
+  } = useGetAllProductQuery([{ name: "page", value: page }, params], {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 10000,
+  });
+
+  const metaData = productData?.meta;
 
   console.log(productData);
 
   const tableData = productData?.data?.map(
-    ({ _id, name, brand, category, price, totalQuantity, image }) => ({
+    ({ _id, name, brand, category, price, totalQuantity, image }, index) => ({
       key: _id, // Ensure this matches the backend `_id`
       name,
       brand,
@@ -33,6 +39,7 @@ const AllProduct = () => {
       price,
       totalQuantity,
       image,
+      serial: (page - 1) * (metaData?.limit || 10) + index + 1,
     })
   );
 
@@ -56,6 +63,12 @@ const AllProduct = () => {
 
   // ✅ Define responsive table columns
   const columns: TableColumnsType<any> = [
+    {
+      title: "Serial",
+      dataIndex: "serial",
+      key: "serial",
+      render: (serial) => serial, // Serial number column
+    },
     {
       title: "Image",
       dataIndex: "image",
@@ -123,6 +136,24 @@ const AllProduct = () => {
     },
   ];
 
+  // const onChange: TableProps<TTableData>["onChange"] = (
+  //   _pagination,
+  //   filters,
+  //   _sorter,
+  //   extra
+  // ) => {
+  //   if (extra.action === "filter") {
+  //     const queryParams: TQueryParam[] = [];
+  //     filters.name?.forEach((item) =>
+  //       queryParams.push({ name: "name", value: item })
+  //     );
+  //     filters.year?.forEach((item) =>
+  //       queryParams.push({ name: "year", value: item })
+  //     );
+  //     setParams(queryParams);
+  //   }
+  // };
+
   return (
     <div style={{ overflowX: "auto", padding: "10px" }}>
       <Table
@@ -130,7 +161,13 @@ const AllProduct = () => {
         dataSource={tableData}
         loading={isFetching}
         scroll={{ x: "max-content" }} // ✅ Enables horizontal scroll if needed
-        pagination={{ pageSize: 10 }} // ✅ Limit items per page for better UX
+        pagination={false} // ✅ Limit items per page for better UX
+      />
+      <Pagination
+        current={page}
+        onChange={(value) => setPage(value)}
+        pageSize={metaData?.limit}
+        total={metaData?.total}
       />
     </div>
   );

@@ -16,7 +16,9 @@ const ProductDetails = () => {
     data: productData,
     isLoading,
     isError,
-  } = useGetSingleProductQuery(id ? { _id: id } : skipToken);
+  } = useGetSingleProductQuery(id ? { _id: id } : skipToken, {
+    refetchOnMountOrArgChange: true,
+  });
 
   // Get product from Redux cart (if already added)
   const cartItem = useAppSelector((state) =>
