@@ -19,6 +19,8 @@ const MyProfile = () => {
   const navigate = useNavigate();
   const [imageUrl, setImageUrl] = useState("");
 
+  console.log(profile);
+
   // ✅ Auto-refresh profile data when component mounts
   useEffect(() => {
     refetch();

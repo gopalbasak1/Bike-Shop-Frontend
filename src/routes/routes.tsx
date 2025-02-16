@@ -3,7 +3,7 @@ import Main from "@/components/layout/Main";
 import About from "@/pages/About";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
-import Products from "@/pages/Products";
+
 import Signup from "@/pages/Signup";
 import { createBrowserRouter } from "react-router-dom";
 import { adminPaths } from "./admin.routes";
@@ -11,13 +11,16 @@ import { routeGenerator } from "@/utils/routesGenerator";
 import { customerPaths } from "./customer.routes";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import AllProduct from "@/pages/AllProduct";
-import ProductDetails from "@/components/Shared/Home/ProductDetails";
 import Checkout from "@/pages/Checkout/Checkout";
+import ProductDetails from "@/components/Shared/Home/ProductDetails";
+import VerifyOrder from "@/pages/Checkout/VerifyOrder";
+import ErrorPage from "@/pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -29,11 +32,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/products/:id",
-        element: <ProductDetails />,
+        element: (
+          <ProtectedRoute role={["admin", "customer"]}>
+            <ProductDetails />
+          </ProtectedRoute>
+        ),
       },
       {
-        path: "/checkout/",
-        element: <Checkout />,
+        path: "/checkout",
+        element: (
+          <ProtectedRoute role={["admin", "customer"]}>
+            <Checkout />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/orders/verify",
+        element: (
+          <ProtectedRoute role="customer">
+            <VerifyOrder />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/about",

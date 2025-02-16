@@ -31,3 +31,13 @@ export type TQueryParam = {
   name: string;
   value: boolean | React.Key;
 };
+
+export type Review = {
+  _id: string;
+  user: {
+    fullName: string;
+    image?: string;
+  };
+  rating: number;
+  comment: string;
+};

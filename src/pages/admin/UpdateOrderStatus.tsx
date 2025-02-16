@@ -22,7 +22,10 @@ import { toast } from "sonner";
 /**
  * Defines the structure for order table data.
  */
-export type TTableData = Pick<TOrder, "user" | "_id" | "product" | "status"> & {
+export type TTableData = Pick<
+  TOrder,
+  "user" | "_id" | "product" | "orderStatus" | "estimatedDeliveryDate"
+> & {
   userId: string;
   status: string;
   serial: number;
@@ -32,7 +35,9 @@ export type TTableData = Pick<TOrder, "user" | "_id" | "product" | "status"> & {
 const UpdateOrderStatus = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
   const [page, setPage] = useState(1);
-  const [estimatedDelivery, setEstimatedDelivery] = useState({});
+  const [estimatedDelivery, setEstimatedDelivery] = useState<
+    Record<string, string>
+  >({});
 
   const {
     data: orderData,
@@ -47,7 +52,7 @@ const UpdateOrderStatus = () => {
   const [updateStatus] = useOrderStatusUpdateMutation();
   const metaData = orderData?.meta;
 
-  const tableData = orderData?.data?.map(
+  const tableData: TTableData[] | undefined = orderData?.data?.map(
     (
       {
         _id,
@@ -56,7 +61,7 @@ const UpdateOrderStatus = () => {
         product,
         estimatedDeliveryDate,
         totalPrice,
-        quantity,
+        orderQuantity,
       },
       index
     ) => ({
@@ -67,7 +72,7 @@ const UpdateOrderStatus = () => {
       orderStatus,
       userId: user?._id,
       totalPrice,
-      quantity,
+      orderQuantity,
       estimatedDeliveryDate,
       serial: (page - 1) * (metaData?.limit || 10) + index + 1,
     })
@@ -106,6 +111,9 @@ const UpdateOrderStatus = () => {
 
     switch (currentStatus) {
       case "Pending":
+        nextStatus = "Paid";
+        break;
+      case "Paid":
         nextStatus = "Processing";
         break;
       case "Processing":
@@ -176,8 +184,8 @@ const UpdateOrderStatus = () => {
     },
     {
       title: "Qty",
-      key: "quantity",
-      dataIndex: "quantity",
+      key: "orderQuantity",
+      dataIndex: "orderQuantity",
     },
     {
       title: "Total Price",
@@ -193,9 +201,13 @@ const UpdateOrderStatus = () => {
           value={
             estimatedDelivery[record.key]
               ? dayjs(estimatedDelivery[record.key])
-              : dayjs(record.estimatedDeliveryDate)
+              : record.estimatedDeliveryDate
+              ? dayjs(record.estimatedDeliveryDate)
+              : null
           }
-          onChange={(date) => handleDateChange(record.key, date)}
+          onChange={(date, dateString) =>
+            handleDateChange(record.key, dateString)
+          }
         />
       ),
       responsive: ["lg"],
@@ -214,7 +226,8 @@ const UpdateOrderStatus = () => {
         return (
           <span
             style={{
-              color: statusColors[status] || "gray",
+              color:
+                statusColors[status as keyof typeof statusColors] || "gray",
               fontWeight: "bold",
             }}
           >

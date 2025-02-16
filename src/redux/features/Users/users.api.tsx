@@ -44,6 +44,21 @@ const userApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+    getReview: builder.query({
+      providesTags: ["reviews"],
+      query: () => ({
+        url: "/reviews",
+        method: "GET",
+      }),
+    }),
+    createReview: builder.mutation({
+      query: (data) => ({
+        url: "/reviews/create-review",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["reviews"],
+    }),
   }),
 });
 
@@ -54,4 +69,6 @@ export const {
   useGetMeQuery,
   useUpdateProfileMutation,
   useChangePasswordMutation,
+  useCreateReviewMutation,
+  useGetReviewQuery,
 } = userApi;

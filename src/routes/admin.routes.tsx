@@ -56,7 +56,6 @@ export const adminPaths = [
         element: <AllProduct />,
       },
       {
-        name: "Update Product",
         path: "update-product/:id",
         element: <UpdateProduct />,
       },

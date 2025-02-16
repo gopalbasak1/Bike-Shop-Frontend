@@ -6,7 +6,7 @@ export type TRoute = {
 };
 
 export type TUserPaths = {
-  name: string;
+  name?: string;
   path?: string;
   element?: ReactNode;
   children?: TUserPaths[];
@@ -14,7 +14,7 @@ export type TUserPaths = {
 
 export type TSidebarItem =
   | {
-      key: string;
+      key: string | undefined;
       label: ReactNode;
       children?: TSidebarItem[];
     }

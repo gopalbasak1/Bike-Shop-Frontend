@@ -1,6 +1,6 @@
 import { baseApi } from "@/redux/api/baseApi";
-import { TQueryParam, TResponseRedux, TUser } from "@/types";
-import { TOrder, TProduct } from "@/types/product";
+import { TQueryParam, TResponseRedux } from "@/types";
+import { TOrder } from "@/types/product";
 
 const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,7 +18,7 @@ const productApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      transformResponse: (response: TResponseRedux<TUser[]>) => {
+      transformResponse: (response: TResponseRedux<TOrder[]>) => {
         return {
           data: response.data,
           meta: response.meta,
@@ -36,6 +36,7 @@ const productApi = baseApi.injectEndpoints({
     }),
 
     getMyOrders: builder.query({
+      providesTags: ["orders"],
       query: (args) => {
         const params = new URLSearchParams();
         if (args) {
@@ -56,20 +57,22 @@ const productApi = baseApi.injectEndpoints({
       },
     }),
 
-    // addProduct: builder.mutation({
-    //   query: (data) => ({
-    //     url: "/products",
-    //     method: "POST",
-    //     body: data,
-    //   }),
-    // }),
-    // updateProduct: builder.mutation({
-    //   query: (args) => ({
-    //     url: `/products/${args._id}`,
-    //     method: "PUT",
-    //     body: args.data,
-    //   }),
-    // }),
+    createOrder: builder.mutation({
+      query: (data) => ({
+        url: "/orders/orderBike",
+        method: "POST",
+        body: data,
+      }),
+
+      invalidatesTags: ["orders"],
+    }),
+    verifyOrder: builder.query({
+      query: (order_id) => ({
+        url: "/orders/verify",
+        params: { order_id },
+        method: "GET",
+      }),
+    }),
     // deleteProduct: builder.mutation({
     //   query: (args) => ({
     //     url: `/products/${args.id}`,
@@ -84,4 +87,6 @@ export const {
   useGetAllOrderQuery,
   useGetMyOrdersQuery,
   useOrderStatusUpdateMutation,
+  useCreateOrderMutation,
+  useVerifyOrderQuery,
 } = productApi;

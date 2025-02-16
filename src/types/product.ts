@@ -1,3 +1,5 @@
+import { TUser } from "./users";
+
 export type TProduct = {
   user: string;
   name: string;
@@ -17,10 +19,11 @@ export type TProduct = {
 
 export type TOrder = {
   _id: string;
-  user: object;
-  product: object;
-  quantity: number;
+  user: TUser;
+  product: TProduct;
+  orderQuantity: number;
   totalPrice: number;
+  estimatedDeliveryDate: Date;
   orderStatus: string;
   createdAt: string;
   updatedAt: string;

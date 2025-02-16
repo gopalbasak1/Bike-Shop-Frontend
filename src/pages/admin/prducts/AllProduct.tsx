@@ -25,13 +25,13 @@ const AllProduct = () => {
   console.log(productData);
 
   const tableData = productData?.data?.map(
-    ({ _id, name, brand, category, price, quantity, image }) => ({
+    ({ _id, name, brand, category, price, totalQuantity, image }) => ({
       key: _id, // Ensure this matches the backend `_id`
       name,
       brand,
       category,
       price,
-      quantity,
+      totalQuantity,
       image,
     })
   );
@@ -89,9 +89,9 @@ const AllProduct = () => {
       render: (price) => `$${price}`,
     },
     {
-      title: "Quantity",
-      dataIndex: "quantity",
-      key: "quantity",
+      title: "Total Quantity",
+      dataIndex: "totalQuantity",
+      key: "totalQuantity",
       responsive: ["sm", "md", "lg", "xl"],
     },
 

@@ -70,7 +70,8 @@ const UpdateProduct = () => {
       if (formData.category) updatedData.category = formData.category;
       if (formData.model) updatedData.model = formData.model;
       if (formData.price) updatedData.price = Number(formData.price);
-      if (formData.quantity) updatedData.quantity = Number(formData.quantity);
+      if (formData.totalQuantity)
+        updatedData.totalQuantity = Number(formData.totalQuantity);
       if (formData.description) updatedData.description = formData.description;
 
       // ✅ Keep old image if no new one is uploaded
@@ -112,7 +113,7 @@ const UpdateProduct = () => {
           <Row className="gap-5">
             <PHInput label="Price" name="price" type="text" />
 
-            <PHInput label="Quantity" name="quantity" type="text" />
+            <PHInput label="Total Quantity" name="totalQuantity" type="text" />
           </Row>
 
           {/* 🖼️ Image Upload Section */}

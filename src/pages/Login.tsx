@@ -6,7 +6,7 @@ import { useAppDispatch } from "@/redux/hook";
 import { verifyToken } from "@/utils/verifyToken";
 import { Button, Row } from "antd";
 import { FieldValues } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import "./Login.css";
 
@@ -70,6 +70,15 @@ const Login = () => {
           Login
         </Button>
       </PHForm>
+      {/* Sign-Up Link */}
+      <div className="">
+        <p className="text-white mt-4 pl-10">
+          Don't have an account?{" "}
+          <Link to="/signup" className="text-blue-400 hover:underline">
+            Sign up here
+          </Link>
+        </p>
+      </div>
     </Row>
   );
 };
