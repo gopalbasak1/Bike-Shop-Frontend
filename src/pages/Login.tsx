@@ -16,11 +16,6 @@ const Login = () => {
 
   const [addLogin] = useLoginMutation();
 
-  const defaultValues = {
-    email: "admin@gmail.com",
-    password: "123456",
-  };
-
   // console.log("data", data);
   // console.log("error", error);
 
@@ -53,7 +48,7 @@ const Login = () => {
       align="middle"
       style={{ height: "100vh" }}
     >
-      <PHForm onSubmit={onSubmit} defaultValues={defaultValues}>
+      <PHForm onSubmit={onSubmit}>
         <PHInput className="inputBg" type="text" name="email" label="Email: " />
 
         <PHInput

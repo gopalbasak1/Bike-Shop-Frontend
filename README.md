@@ -9,7 +9,7 @@ The Bike Store is an e-commerce platform where users can browse, filter, and pur
 
 ## Features
 
-🔐 ** User Authentication**
+🔐 **User Authentication**
 
 - Secure **Registration & Login** (JWT-based authentication)
 - Role-based access control (Customer, Admin)
