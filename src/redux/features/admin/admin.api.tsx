@@ -47,10 +47,10 @@ const productApi = baseApi.injectEndpoints({
             }
           });
         }
+        params.append("limit", "100"); // Ensure fetching all products
         return {
-          url: "/products",
+          url: `/products?${params.toString()}`,
           method: "GET",
-          params, // Pass query parameters
         };
       },
       transformResponse: (response: TResponseRedux<TProduct[]>) => {

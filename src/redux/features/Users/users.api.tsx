@@ -1,13 +1,29 @@
 import { baseApi } from "@/redux/api/baseApi";
+import { TQueryParam, TResponseRedux, TUser } from "@/types";
 
 const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllUser: builder.query({
       providesTags: ["users"],
-      query: () => ({
-        url: "/users",
-        method: "GET",
-      }),
+      query: (args) => {
+        const params = new URLSearchParams();
+        if (args) {
+          args.forEach((item: TQueryParam) => {
+            params.append(item.name, item.value as string);
+          });
+        }
+        params.append("limit", "100"); // Add this to fetch all users
+        return {
+          url: `/users?${params.toString()}`,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: TResponseRedux<TUser[]>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
     }),
     addRegister: builder.mutation({
       query: (data) => ({

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useAppSelector } from "@/redux/hook";
-
 import {
   clearCart,
   removeProductFromCart,

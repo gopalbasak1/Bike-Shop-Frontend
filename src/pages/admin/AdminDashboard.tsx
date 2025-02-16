@@ -25,14 +25,21 @@ const AdminDashboard = () => {
     data: usersData,
     refetch: refetchUsers,
     isLoading: isLoadingUsers,
-  } = useGetAllUserQuery(undefined, { refetchOnMountOrArgChange: true });
-
+  } = useGetAllUserQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 10000,
+  });
+  console.log(usersData); // Check if the response contains all users
+  console.log(usersData?.data?.length); // This should print 16
   // Fetch all orders
   const {
     data: ordersData,
     refetch: refetchOrders,
     isLoading: isLoadingOrders,
-  } = useGetAllOrderQuery(undefined, { refetchOnMountOrArgChange: true });
+  } = useGetAllOrderQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 10000,
+  });
 
   // Fetch all products
   const {
@@ -43,6 +50,9 @@ const AdminDashboard = () => {
     refetchOnMountOrArgChange: true,
     pollingInterval: 10000,
   });
+
+  console.log(productData); // Check if the response contains all productData
+  console.log(productData?.data?.length); // This should print 16
 
   // Auto-refresh every 5 seconds
   useEffect(() => {
@@ -58,11 +68,11 @@ const AdminDashboard = () => {
   if (isLoadingUsers || isLoadingOrders || isLoadingProduct) {
     return <Skeleton />;
   }
-
+  //console.log(usersData.data);
   const totalUsers = usersData?.data?.length || 0;
   const totalOrders = ordersData?.data?.length || 0;
   const totalProduct = productData?.data?.length || 0;
-
+  console.log(totalUsers);
   // Calculate total revenue
   const totalRevenue =
     ordersData?.data?.reduce(
