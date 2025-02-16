@@ -53,7 +53,7 @@ const Login = () => {
 
         <PHInput
           className="inputBg"
-          type="text"
+          type="password"
           name="password"
           label="Password: "
         />
