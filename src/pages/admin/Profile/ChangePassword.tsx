@@ -6,7 +6,7 @@ import { useAppDispatch } from "@/redux/hook";
 import { Button, Row } from "antd";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-
+import "./ChangePassword.css";
 const ChangePassword = () => {
   const [changePassword] = useChangePasswordMutation();
   const dispatch = useAppDispatch();
@@ -27,7 +27,12 @@ const ChangePassword = () => {
   return (
     <Row justify="center" align="middle" style={{ height: "100vh" }}>
       <PHForm onSubmit={onSubmit}>
-        <PHInput type="text" name="oldPassword" label="Old Password: " />
+        <PHInput
+          className="password"
+          type="text"
+          name="oldPassword"
+          label="Old Password: "
+        />
 
         <PHInput type="text" name="newPassword" label="New Password: " />
 

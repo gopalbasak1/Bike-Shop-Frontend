@@ -13,6 +13,7 @@ const productApi = baseApi.injectEndpoints({
             params.append(item.name, item.value as string);
           });
         }
+        params.append("limit", "100");
         return {
           url: `/users?${params.toString()}`,
           method: "GET",

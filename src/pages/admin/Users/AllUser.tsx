@@ -171,7 +171,7 @@ const AllUser = () => {
       <Pagination
         current={page}
         onChange={(value) => setPage(value)}
-        pageSize={metaData?.limit}
+        pageSize={metaData?.limit || 10}
         total={metaData?.total}
       />
     </>
