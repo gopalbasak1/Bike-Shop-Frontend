@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { logout } from "@/redux/features/auth/authSlice";
 import { useState } from "react";
 import { useAppSelector, useAppDispatch } from "@/redux/hook";
@@ -24,12 +24,20 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-blue-600 text-white p-4 rounded-2xl md:mx-2 mx-2 mt-2 shadow-lg relative z-50">
+    <nav className="bg-[#b5b8b6] text-black p-4 rounded-2xl font-semibold md:mx-2 mx-2 mt-2 relative shadow-lg z-50">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center space-x-2">
-          <img src={logo} alt="Bike Shop Logo" className="h-12 md:h-16" />
-          <span className="text-lg md:text-xl font-bold">Bike Shop</span>
+          <Link to="/">
+            <img
+              src={logo}
+              alt="Bike Shop Logo"
+              className="h-12 md:h-16 border-2 rounded-full border-s-purple-700 border-r-purple-700 animate-borderPulse"
+            />
+          </Link>
+          <Link to="/">
+            <span className="text-lg md:text-xl font-bold">Bike Shop</span>
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -38,16 +46,31 @@ const Navbar = () => {
         </button>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex space-x-6">
-          <Link to="/" className="hover:text-gray-200">
+        <div className="hidden md:flex space-x-6 text-[16px]">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive ? "border-b-2 border-white pb-1" : "hover:text-gray-200"
+            }
+          >
             Home
-          </Link>
-          <Link to="/all-product" className="hover:text-gray-200">
+          </NavLink>
+          <NavLink
+            to="/all-product"
+            className={({ isActive }) =>
+              isActive ? "border-b-2 border-white pb-1" : "hover:text-gray-200"
+            }
+          >
             All Products
-          </Link>
-          <Link to="/about" className="hover:text-gray-200">
+          </NavLink>
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              isActive ? "border-b-2 border-white" : "hover:text-gray-200"
+            }
+          >
             About
-          </Link>
+          </NavLink>
         </div>
 
         {/* Desktop User/Profile Section */}
@@ -96,7 +119,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden absolute top-16 left-0 w-full bg-blue-600 shadow-lg rounded-b-2xl z-40">
+        <div className="md:hidden absolute top-16 left-0 w-full bg-[#b5b8b6] shadow-lg rounded-b-2xl z-40">
           <div className="flex flex-col space-y-4 p-4 text-center">
             <Link
               to="/"
