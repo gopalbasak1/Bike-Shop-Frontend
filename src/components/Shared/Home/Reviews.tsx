@@ -55,35 +55,35 @@ const ReviewPage = () => {
             <SwiperSlide key={review._id}>
               <div className="border p-4  flex items-start space-x-4 rounded-2xl">
                 {/* User Image */}
-                {review.user.image ? (
+                {review?.user?.image ? (
                   <img
-                    src={review.user.image}
-                    alt={review.user.fullName}
+                    src={review?.user?.image}
+                    alt={review?.user?.fullName}
                     className="w-10 h-10 rounded-full object-cover"
                   />
                 ) : (
                   <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-white">
-                    {review.user.fullName.charAt(0)}
+                    {review?.user?.fullName?.charAt(0)}
                   </div>
                 )}
 
                 {/* Review Content */}
                 <div>
-                  <p className="font-semibold">{review.user.fullName}</p>
+                  <p className="font-semibold">{review?.user?.fullName}</p>
                   <div className="flex items-center space-x-1">
                     {[...Array(5)].map((_, i) => (
                       <StarIcon
                         key={i}
                         size={16}
                         className={
-                          i < review.rating
+                          i < review?.rating
                             ? "text-yellow-500"
                             : "text-gray-300"
                         }
                       />
                     ))}
                   </div>
-                  <p className="text-gray-600">{review.comment}</p>
+                  <p className="text-gray-600">{review?.comment}</p>
                 </div>
               </div>
             </SwiperSlide>

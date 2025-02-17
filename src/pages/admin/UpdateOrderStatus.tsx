@@ -47,13 +47,19 @@ const UpdateOrderStatus = () => {
     isFetching,
     refetch,
   } = useGetAllOrderQuery(
-    [{ name: "page", value: page }, { name: "sort", value: "id" }, ...params],
-    { refetchOnMountOrArgChange: true, pollingInterval: 10000 }
+    [
+      { name: "page", value: page.toString() },
+      { name: "limit", value: "10" },
+      { name: "sort", value: "id" },
+      ...params,
+    ],
+    { refetchOnMountOrArgChange: true, pollingInterval: 20000 }
   );
 
   const [updateStatus] = useOrderStatusUpdateMutation();
-  const metaData = orderData?.meta;
 
+  const metaData = orderData?.meta;
+  console.log(metaData);
   const tableData: TTableData[] | undefined = orderData?.data?.map(
     (
       {
@@ -286,8 +292,8 @@ const UpdateOrderStatus = () => {
       <Pagination
         current={page}
         onChange={(value) => setPage(value)}
-        pageSize={metaData?.limit}
-        total={metaData?.total}
+        pageSize={metaData?.limit || 10}
+        total={metaData?.total || 0}
       />
     </>
   );

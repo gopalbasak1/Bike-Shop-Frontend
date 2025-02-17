@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useGetAllOrderQuery } from "@/redux/features/Orders/Order.api";
 import { useGetAllUserQuery } from "@/redux/features/Users/users.api";
-import { useGetAllProductQuery } from "@/redux/features/admin/admin.api";
+import { useGetAllProductToPageQuery } from "@/redux/features/admin/admin.api";
 import { Card, Col, Row, Statistic } from "antd";
 import {
   LineChart,
@@ -29,8 +29,8 @@ const AdminDashboard = () => {
     refetchOnMountOrArgChange: true,
     pollingInterval: 10000,
   });
-  console.log(usersData); // Check if the response contains all users
-  console.log(usersData?.data?.length); // This should print 16
+  //console.log(usersData); // Check if the response contains all users
+  //console.log(usersData?.data?.length); // This should print 16
   // Fetch all orders
   const {
     data: ordersData,
@@ -46,7 +46,7 @@ const AdminDashboard = () => {
     data: productData,
     refetch: refetchProducts,
     isLoading: isLoadingProduct,
-  } = useGetAllProductQuery(undefined, {
+  } = useGetAllProductToPageQuery(undefined, {
     refetchOnMountOrArgChange: true,
     pollingInterval: 10000,
   });

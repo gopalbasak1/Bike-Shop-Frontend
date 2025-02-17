@@ -21,10 +21,17 @@ const AllProduct = () => {
     data: productData,
     refetch,
     isFetching,
-  } = useGetAllProductQuery([{ name: "page", value: page }, params], {
-    refetchOnMountOrArgChange: true,
-    pollingInterval: 10000,
-  });
+  } = useGetAllProductQuery(
+    [
+      { name: "page", value: page.toString() },
+      { name: "limit", value: "10" },
+      params,
+    ],
+    {
+      refetchOnMountOrArgChange: true,
+      pollingInterval: 20000,
+    }
+  );
 
   const metaData = productData?.meta;
 

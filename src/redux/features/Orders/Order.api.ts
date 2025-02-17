@@ -13,10 +13,11 @@ const productApi = baseApi.injectEndpoints({
             params.append(item.name, item.value as string);
           });
         }
-        params.append("limit", "100");
+
         return {
-          url: `/orders?${params.toString()}`,
+          url: `/orders`,
           method: "GET",
+          params: params,
         };
       },
       transformResponse: (response: TResponseRedux<TOrder[]>) => {
@@ -74,13 +75,6 @@ const productApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
-    // deleteProduct: builder.mutation({
-    //   query: (args) => ({
-    //     url: `/products/${args.id}`,
-    //     method: "DELETE",
-    //   }),
-    //   invalidatesTags: ["products"],
-    // }),
   }),
 });
 

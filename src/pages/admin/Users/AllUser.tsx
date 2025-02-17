@@ -34,10 +34,17 @@ const AllUser = () => {
     data: userData,
     isFetching,
     refetch,
-  } = useGetAllUsersQuery([{ name: "page", value: page }, ...params], {
-    refetchOnMountOrArgChange: true,
-    pollingInterval: 10000,
-  });
+  } = useGetAllUsersQuery(
+    [
+      { name: "page", value: page.toString() },
+      { name: "limit", value: "10" },
+      ...params,
+    ],
+    {
+      refetchOnMountOrArgChange: true,
+      pollingInterval: 10000,
+    }
+  );
 
   const metaData = userData?.meta;
 

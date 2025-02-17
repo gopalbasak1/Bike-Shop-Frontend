@@ -13,10 +13,11 @@ const productApi = baseApi.injectEndpoints({
             params.append(item.name, item.value as string);
           });
         }
-        params.append("limit", "100");
+        // params.append("limit", "100");
         return {
-          url: `/users?${params.toString()}`,
+          url: `/users`,
           method: "GET",
+          params: params,
         };
       },
       transformResponse: (response: TResponseRedux<TUser[]>) => {
@@ -48,10 +49,11 @@ const productApi = baseApi.injectEndpoints({
             }
           });
         }
-        params.append("limit", "100"); // Ensure fetching all products
+        //params.append("limit", "100"); // Ensure fetching all products
         return {
-          url: `/products?${params.toString()}`,
+          url: `/products`,
           method: "GET",
+          params: params,
         };
       },
       transformResponse: (response: TResponseRedux<TProduct[]>) => {
@@ -89,6 +91,32 @@ const productApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["products"],
     }),
+
+    getAllProductToPage: builder.query({
+      providesTags: ["products"],
+      query: (args) => {
+        const params = new URLSearchParams();
+        if (args && Array.isArray(args)) {
+          // Ensure args is an array
+          args.forEach((item: TQueryParam) => {
+            if (item && item.name && item.value) {
+              params.append(item.name, item.value.toString());
+            }
+          });
+        }
+        params.append("limit", "100"); // Ensure fetching all products
+        return {
+          url: `/products?${params.toString()}`,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: TResponseRedux<TProduct[]>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
+    }),
   }),
 });
 
@@ -100,4 +128,5 @@ export const {
   useDeleteProductMutation,
   useGetAllUsersQuery,
   useStatusUpdateMutation,
+  useGetAllProductToPageQuery,
 } = productApi;

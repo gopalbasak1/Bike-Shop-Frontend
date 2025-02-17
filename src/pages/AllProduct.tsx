@@ -17,6 +17,7 @@ const AllProduct = () => {
   // Construct query parameters dynamically
   const queryParams = [
     { name: "page", value: page },
+    { name: "limit", value: "10" },
     { name: "sort", value: "_id" },
     ...(search ? [{ name: "searchTerm", value: search }] : []),
     ...(brand ? [{ name: "brand", value: brand }] : []),
